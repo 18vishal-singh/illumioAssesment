@@ -79,17 +79,14 @@ public class Main {
             BufferedReader br = new BufferedReader(new InputStreamReader(Objects.requireNonNull(inputStream)));
             String line;
             while ((line = br.readLine()) != null) {
-                String[] parts = line.split(" ");
-                if (StringUtils.isNotEmpty(parts[6]) && StringUtils.isNotEmpty(parts[7])) {
+                String[] parts = line.trim().split(" ");
+                if (parts.length >= 7 && StringUtils.isNotEmpty(parts[6]) && StringUtils.isNotEmpty(parts[7])) {
                     String dstPort = parts[6].trim().toLowerCase();
                     String protocol = protocolMapping.get(Integer.parseInt(parts[7].trim()));
                     String key = dstPort + ":" + protocol;
 
                     String tag = tagMappings.getOrDefault(key, "Untagged");
                     tagCounts.put(tag, tagCounts.getOrDefault(tag, 0) + 1);
-                    System.out.println(key);
-                    System.out.println(tag);
-
                     portProtocolCounts.put(dstPort + "," + protocol, portProtocolCounts.getOrDefault(dstPort + "," + protocol, 0) + 1);
                 }
             }
